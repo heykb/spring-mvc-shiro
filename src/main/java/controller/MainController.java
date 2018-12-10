@@ -46,6 +46,6 @@ public class MainController {
     @ResponseBody
     @RequiresRoles("user")
     public String checkRoles(){
-       return "checkRoles success";
+       return "checkRoles successsss";
     }
 }
