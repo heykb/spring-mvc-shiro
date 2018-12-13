@@ -13,6 +13,23 @@
 
 	<context:component-scan base-package="controller" />
 	<mvc:annotation-driven />
+	<!--模板解析器-->
+	<bean  id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+		<property name="prefix" value="/"/>
+		<property name="suffix" value=".html"/>
+		<property name="templateMode" value="HTML5"/>
+		<property name="cacheable" value="false" />
+		<property name="characterEncoding" value="UTF-8"/>
+	</bean>
+	<!--模板引擎-->
+	<bean id="tmplateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver"/>
+	</bean>
+	<!--视图解析器-->
+	<bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="tmplateEngine"/>
+		<property name="characterEncoding" value="UTF-8"/>
+	</bean>
 	<!--<bean-->
 		<!--class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
 		<!--<property name="prefix">-->
@@ -22,11 +39,6 @@
 			<!--<value>.jsp</value>-->
 		<!--</property>-->
 	<!--</bean>-->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<!-- 前缀 -->
-		<property name="prefix" value="/" />
-		<property name="suffix" value=".html" />
-	</bean>
 	<bean id="authorizationAttributeSourceAdvisor" class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		<property name="securityManager" ref="securityManager"/>
 	</bean>

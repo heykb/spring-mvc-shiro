@@ -1,13 +1,12 @@
 package controller;
 
+import mapper.UserMapper;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
-import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class MainController {
 
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String login(){
+        return "login";
+    }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
@@ -47,5 +54,12 @@ public class MainController {
     @RequiresRoles("user")
     public String checkRoles(){
        return "checkRoles successsss";
+    }
+
+    @RequestMapping(value = "/users",method = RequestMethod.GET)
+    @RequiresRoles("user")
+    @ResponseBody
+    public String userlist(){
+        return (userMapper.selectAll()).toString();
     }
 }

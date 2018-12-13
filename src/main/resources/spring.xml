@@ -37,7 +37,6 @@
         <property name="unauthorizedUrl" value="/403.jsp"/>
         <property name="filterChainDefinitions">
             <value>
-                /login.html = anon
                 /login = anon
                 /logout = logout
                 /* = authc

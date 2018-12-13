@@ -6,6 +6,23 @@
 
 
     <context:property-placeholder location="classpath:config.properties" />
+    <bean id="datasource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="datasource"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
 
+    </bean>
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="mapper"/>
+        <property name="properties">
+            <value>
+                mappers=util.MyBaseMapper
+            </value>
+        </property>
+    </bean>
 
 </beans>
